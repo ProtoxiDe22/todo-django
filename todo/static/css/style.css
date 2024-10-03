@@ -1,0 +1,25 @@
+/* Custom CSS for scrollable columns */
+.scrollable-column {
+    height: 70vh;
+    overflow-y: auto;
+    padding-right: 15px;
+}
+
+.scrollable-column::-webkit-scrollbar {
+    width: 6px;
+    border-radius: 20px;
+}
+
+.scrollable-column::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 20px;    
+}
+
+.scrollable-column::-webkit-scrollbar-thumb {
+    background: #bbb;
+    border-radius: 3px;
+}
+
+.scrollable-column::-webkit-scrollbar-thumb:hover {
+    background: #aaa;
+}

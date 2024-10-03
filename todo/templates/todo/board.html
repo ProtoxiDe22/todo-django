@@ -1,0 +1,36 @@
+{% extends 'todo/base.html' %}
+
+{% block title %}Task Board - Todo App{% endblock title %}
+
+{% block content %}
+<div class="container mt-5">
+    <h2>Task Board</h2>
+    <a href="{% url 'todo:task_create' %}" class="btn btn-primary mb-3">Create Task</a>
+    <div class="row">
+        <div class="col-md-6">
+            <h3>Completed Tasks</h3>
+            <div class="scrollable-column">
+                {% for task in tasks %}
+                    {% if task.completed %}
+                        {% include 'todo/components/task.html' with task=task %}
+                    {% endif %}
+                {% empty %}
+                    <p>No completed tasks available.</p>
+                {% endfor %}
+            </div>
+        </div>
+        <div class="col-md-6">
+            <h3>Pending Tasks</h3>
+            <div class="scrollable-column">
+                {% for task in tasks %}
+                    {% if not task.completed %}
+                        {% include 'todo/components/task.html' with task=task %}
+                    {% endif %}
+                {% empty %}
+                    <p>No pending tasks available.</p>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock content %}

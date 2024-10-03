@@ -2,6 +2,7 @@ from django.urls import path
 
 from .views import HomeView, BoardView
 from .views_auth import RegisterView, LoginView, LogoutView
+from .views_tasks import TaskCreateView, TaskUpdateView, TaskCompleteView
 
 app_name = 'todo'
 
@@ -11,4 +12,7 @@ urlpatterns = [
     path('auth/login/', LoginView.as_view(), name='login'),
     path('auth/logout/', LogoutView.as_view(), name='logout'),
     path('board/', BoardView.as_view(), name='board'),
+    path('task/create/', TaskCreateView.as_view(), name='task_create'),
+    path('task/<int:pk>/update/', TaskUpdateView.as_view(), name='task_update'),
+    path('task/<int:pk>/complete/', TaskCompleteView.as_view(), name='task_complete'),
 ]

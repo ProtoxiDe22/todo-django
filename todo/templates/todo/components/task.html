@@ -1,0 +1,57 @@
+<div class="card mb-3">
+  <div class="card-body">
+    <h5 class="card-title">
+      <span style="{% if task.completed %}text-decoration: line-through;{% endif %}">{{ task.title }}</span>
+      {% if task.completed %}
+        <span class="badge badge-success ml-2">Completed</span>
+        <p class="card-text">
+          <small class="text-muted">Completed on: {{ task.updated_at }}</small>
+        </p>
+      {% endif %}
+    </h5>
+    {% if task.completed %}
+      <button class="btn btn-sm btn-outline-secondary mb-4" type="button" data-toggle="collapse" data-target="#task-{{ task.pk }}-details" >Show Details</button>
+    {% endif %}
+    <div class="{% if task.completed %}collapse{% endif %}" id="task-{{ task.pk }}-details">
+      <div class="d-flex justify-content-between align-items-start">
+        <div class="w-100">
+          <p class="card-text">{{ task.description }}</p>
+          <ul class="list-group list-group-flush">
+            <li class="list-group-item">
+              <strong>Due Date:</strong> {% if task.due_date %}
+                {{ task.due_date }}
+              {% else %}
+                Not set
+              {% endif %}
+            </li>
+            <li class="list-group-item">
+              <strong>Status:</strong> {% if task.completed %}Completed{% else %}Pending{% endif %}
+            </li>
+            <li class="list-group-item">
+              <strong>Assignees:</strong>
+              <ul>
+                {% for assignee in task.assignees.all %}
+                  <li>{{ assignee.username }}</li>
+                {% endfor %}
+              </ul>
+            </li>
+          </ul>
+          <p class="card-text">
+            <small class="text-muted">Created: {{ task.created_at }}</small>
+          </p>
+          <p class="card-text">
+            <small class="text-muted">Last updated: {{ task.updated_at }}</small>
+          </p>
+          <a href="{% url 'todo:task_update' task.pk %}" class="btn btn-primary">Edit</a>
+          {% if not task.completed %}
+            <form method="POST" action="{% url 'todo:task_complete' task.pk %}" style="display: inline;">
+                {% csrf_token %}
+                <button type="submit" class="btn btn-success float-right">Complete</button>
+            </form>
+          {% endif %}
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>
