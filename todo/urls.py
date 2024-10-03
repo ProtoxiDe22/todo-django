@@ -1,4 +1,4 @@
-from django.urls import path
+from django.urls import path, include
 
 from .views import HomeView, BoardView
 from .views_auth import RegisterView, LoginView, LogoutView, UserProfileView
@@ -16,4 +16,5 @@ urlpatterns = [
     path('task/<int:pk>/update/', TaskUpdateView.as_view(), name='task_update'),
     path('task/<int:pk>/complete/', TaskCompleteView.as_view(), name='task_complete'),
     path('auth/userProfile/', UserProfileView.as_view(), name='user_profile'),
+    path('api/', include('todo.API.urls')),
 ]
