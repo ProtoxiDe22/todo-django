@@ -114,6 +114,7 @@ LANGUAGE_CODE = env('LANGUAGE_CODE', default='en-us')
 TIME_ZONE = env('TIME_ZONE', default='UTC')
 
 USE_I18N = True
+USE_L10N = True
 
 USE_TZ = True
 
@@ -124,6 +125,9 @@ STATIC_URL = env('STATIC_URL', default='static/')
 STATICFILES_DIRS = (
     os.path.join(BASE_DIR, 'static'),
 )
+
+MEDIA_URL = env('MEDIA_URL', default='/media/')
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field

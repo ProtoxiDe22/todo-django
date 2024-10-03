@@ -161,3 +161,6 @@ minio
 
 # Windows file lock
 /**/.~lock.*
+
+# Media files
+media/

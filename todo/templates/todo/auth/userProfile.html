@@ -1,0 +1,21 @@
+{% extends 'todo/base.html' %}
+{% load crispy_forms_tags %}
+
+{% block title %}Edit Profile - Todo App{% endblock title %}
+
+{% block content %}
+<div class="container mt-5">
+    <h2>Edit Profile</h2>
+    <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        <h3>Profile Information</h3>
+        {{ profile_form|crispy }}
+        <button type="submit" class="btn btn-primary mt-3">Save Changes</button>
+    </form>
+    {% if error %}
+        <div class="alert alert-danger">
+            {{ error }}
+        </div>
+    {% endif %} 
+</div>
+{% endblock content %}

@@ -4,6 +4,15 @@ from django.db import models
 from django.contrib.auth.models import User
 from django.core.exceptions import ValidationError
 
+from django.db import models
+from django.contrib.auth.models import User
+
+
+class Profile(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    date_of_birth = models.DateField(null=True, blank=True)
+    profile_picture = models.ImageField(upload_to='images/profile_pics/', null=True, blank=True)
+    
 class Task(models.Model):
     title = models.CharField(max_length=200)
     description = models.TextField(blank=True)
@@ -12,6 +21,7 @@ class Task(models.Model):
     due_date = models.DateTimeField(null=True, blank=True, default=None)
     completed = models.BooleanField(default=False)
     assignees = models.ManyToManyField(User, related_name='assigned_tasks')
+
 
     def clean(self):
         if self.pk and not self.assignees.exists():

@@ -3,8 +3,11 @@ from django.shortcuts import render, redirect
 from django.contrib.auth.models import User
 from django.contrib.auth import login, authenticate, logout
 
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib import messages
 
-from .forms.forms_auth import RegisterForm, LoginForm
+from .models import Profile
+from .forms.forms_auth import RegisterForm, LoginForm, ProfileForm
 
 
 
@@ -55,4 +58,26 @@ class LogoutView(View):
     def get(self, request):
         logout(request)
         return redirect('todo:home')
-    
+class UserProfileView(LoginRequiredMixin, View):
+    template_name = 'todo/auth/userProfile.html'
+
+    # Get the user 'User' object and try to get the profile, if it doesn't exist yet, create it
+    # then render the page with the user_form and profile_form
+    def get(self, request):
+        user_form = RegisterForm(instance=request.user)
+        profile, created = Profile.objects.get_or_create(user=request.user)
+        profile_form = ProfileForm(instance=profile)
+        return render(request, self.template_name, {
+            'user_form': user_form,
+            'profile_form': profile_form
+        })
+
+    def post(self, request):
+        profile, created = Profile.objects.get_or_create(user=request.user)
+        profile_form = ProfileForm(request.POST, request.FILES, instance=profile)
+
+        if profile_form.is_valid():
+            profile_form.save()
+            return redirect('todo:user_profile')
+        else:
+            return redirect('todo:user_profile', {'profile_form': profile_form, 'error': 'there was an error in your form.'})
