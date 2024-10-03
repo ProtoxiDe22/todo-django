@@ -1,0 +1,21 @@
+{% extends 'todo/base.html' %}
+{% load crispy_forms_tags %}
+
+{% block title %}Register - Todo App{% endblock title %}
+
+{% block content %}
+<div class="container mt-5">
+    <h2>Register</h2>
+    {% comment %} <form method="POST" action="{% url 'todo:register' %}">
+        {% csrf_token %}
+        {% if form.errors %}
+            <div class="alert alert-danger">
+                <strong>There were errors in your form submission:</strong>
+                {{ form.errors }}
+            </div>
+        {% endif %} {% endcomment %}
+        {% crispy form %}
+    {% comment %} </form> {% endcomment %}
+    <p class="mt-3">Already have an account? <a href="{% url 'todo:login' %}">Login here</a></p>
+</div>
+{% endblock content %}
