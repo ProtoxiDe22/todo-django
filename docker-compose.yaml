@@ -9,7 +9,8 @@ services:
       - .env
     depends_on:
       - db
-
+    volumes:
+      - ./media:/app/media
   db:
     image: postgres:13
     volumes:
